@@ -1,9 +1,5 @@
 using System;
-using System.Linq;
-using Athena.API.Services;
 using Athena.DataAccess;
-using Athena.DataAccess.Repository;
-using FluentScheduler;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,15 +14,6 @@ namespace Athena.API
             var host = CreateHostBuilder(args).Build();
 
             CreateDatabaseIfNotExists(host);
-
-            JobManager.Initialize();
-
-            JobManager.AddJob(
-                () => StockService.Check(),
-                s => s.ToRunEvery(5).Minutes()
-            );
-
-            StockService.Check();
 
             host.Run();
         }

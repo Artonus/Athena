@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Athena.API.Model;
 using Athena.DataAccess.Repository;
 
@@ -8,7 +9,7 @@ namespace Athena.API.Services
 {
     public interface IStockService
     {
-        void Check();
+        Task Check();
     }
 
     public class StockService : IStockService
@@ -22,7 +23,7 @@ namespace Athena.API.Services
             _productRepository = productRepository;
         }
 
-        public void Check()
+        public async Task Check()
         {
             var templates = _productRepository.GetAll().Select(s => s.AccessTemplate).ToList();
             foreach (var template in templates)

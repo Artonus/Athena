@@ -1,3 +1,4 @@
+using Athena.API.Jobs;
 using Athena.API.Services;
 using Athena.DataAccess;
 using Athena.DataAccess.Repository;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Quartz;
 using StackExchange.Redis;
 
 namespace Athena.API
@@ -40,9 +42,14 @@ namespace Athena.API
             services.AddTransient<IRetailerRepository, RetailerRepository>();
             services.AddTransient<ICrawler, Crawler>();
             services.AddTransient<IStockService, StockService>();
+            
 
-            //Redis
+            // Redis
             services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration.GetConnectionString("Redis")));
+
+            // Quartz scheduler
+            services.AddQuartz();
+            services.AddTransient<CrawlerJob>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

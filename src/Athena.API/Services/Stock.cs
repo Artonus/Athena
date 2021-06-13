@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using Athena.API.Model;
 
 namespace Athena.API.Services
 {

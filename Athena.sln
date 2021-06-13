@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.808.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Athena.API", "src\Athena.API\Athena.API.csproj", "{F3614C6C-5CE1-4796-8481-B463489A1EA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Athena.DataAccess", "src\Athena.DataAccess\Athena.DataAccess.csproj", "{B7E07C43-0613-42D4-9DA0-30C800143684}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3614C6C-5CE1-4796-8481-B463489A1EA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3614C6C-5CE1-4796-8481-B463489A1EA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3614C6C-5CE1-4796-8481-B463489A1EA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3614C6C-5CE1-4796-8481-B463489A1EA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7E07C43-0613-42D4-9DA0-30C800143684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7E07C43-0613-42D4-9DA0-30C800143684}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7E07C43-0613-42D4-9DA0-30C800143684}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7E07C43-0613-42D4-9DA0-30C800143684}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9C5710CE-B262-493F-B7E7-D06162CA41E1}
+	EndGlobalSection
+EndGlobal

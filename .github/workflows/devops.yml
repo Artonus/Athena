@@ -1,0 +1,28 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Publish
+      run: dotnet publish --configuration Release
+    - name: Copy files over
+      uses: appleboy/scp-action@master
+      with:
+        host: athenaproject.cf
+        username: root
+        port: 22
+        key: ${{ secrets.SSH }}
+        source: "/home/runner/work/Athena/Athena/bin/Release/net5.0/publish/"
+        target: "/root/athena"

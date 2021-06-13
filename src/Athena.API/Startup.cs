@@ -1,3 +1,4 @@
+using Athena.API.Services;
 using Athena.DataAccess;
 using Athena.DataAccess.Repository;
 using Athena.DataAccess.Repository.Base;
@@ -37,6 +38,8 @@ namespace Athena.API
             services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IRetailerRepository, RetailerRepository>();
+            services.AddTransient<ICrawler, Crawler>();
+            services.AddTransient<IStockService, StockService>();
 
             //Redis
             services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration.GetConnectionString("Redis")));

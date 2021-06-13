@@ -18,15 +18,15 @@ namespace Athena.API
             var host = CreateHostBuilder(args).Build();
 
             CreateDatabaseIfNotExists(host);
-            
+
             JobManager.Initialize();
 
             JobManager.AddJob(
-                () => Stock.Check(),
+                () => StockService.Check(),
                 s => s.ToRunEvery(5).Minutes()
             );
 
-            Stock.Check();
+            StockService.Check();
 
             host.Run();
         }
@@ -39,11 +39,7 @@ namespace Athena.API
                 try
                 {
                     var context = services.GetRequiredService<AthenaDbContext>();
-                    //context.Database.EnsureCreated();
                     DbInitializer.Initialize(context);
-                    var repo = services.GetService<IProductRepository>();
-                    var templates = repo.GetAll().Select(s => s.AccessTemplate).ToList();
-                    Stock.Init(templates);
                 }
                 catch (Exception ex)
                 {
@@ -53,11 +49,10 @@ namespace Athena.API
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Athena.API.Model;
 using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium.Chrome;
 using StackExchange.Redis;

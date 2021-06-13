@@ -1,6 +1,6 @@
 namespace Athena.API.Model
 {
-    public class Retailer
+    public class RetailerModel
     {
         public string name { get; set; }
         public string start { get; set; }

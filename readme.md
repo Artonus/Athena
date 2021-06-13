@@ -15,3 +15,5 @@ The Athena utilises the Redis Cache to reduce the load on the database. The Redi
 > docker run --name athena_cache -d redis
 
 This command sets up the redis cache that is later accessed by the API to retrieve the current availability of the certain product.
+
+This repository is a fork of a [stefangrosaru/Athena](https://github.com/stefangrosaru/Athena) repository. The initial idea has been created as an solution to the CIS015-3 unit Social and Proffessional Project Management at University of Begfordshire.

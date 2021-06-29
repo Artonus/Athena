@@ -150,6 +150,7 @@ namespace Athena.API.Services
                     Console.WriteLine(e.ToString());
                 }
             }
+            //TODO: extract redis connection
             ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(Startup.Configuration.GetConnectionString("Redis"));
             IDatabase db = redis.GetDatabase();
             db.StringSet(retailerModel.name, result);

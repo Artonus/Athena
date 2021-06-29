@@ -5,7 +5,6 @@ using Quartz;
 namespace Athena.API.Jobs
 {
     public class CrawlerJob : BaseJob
-
     {
         private readonly IStockService _stockService;
 

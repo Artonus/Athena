@@ -1,3 +1,4 @@
+using System;
 using Athena.API.Jobs;
 using Athena.API.Services;
 using Athena.DataAccess;
@@ -48,8 +49,21 @@ namespace Athena.API
             services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration.GetConnectionString("Redis")));
 
             // Quartz scheduler
-            services.AddQuartz();
+            services.AddQuartz(q =>
+            {
+                q.SchedulerId = "AthenaScheduler";
+                q.SchedulerName = "Athena Quartz Scheduler";
+
+                q.UseMicrosoftDependencyInjectionJobFactory();
+                
+                q.ScheduleJob<CrawlerJob>(trg=>
+                        trg.WithIdentity("Athena Crawler")
+                            .WithDescription("Athena crawler for checking product availability")
+                            .StartAt(DateBuilder.EvenMinuteDate(DateTimeOffset.UtcNow))
+                            .WithCronSchedule("0 0/5 * * * ?"));
+            });
             services.AddTransient<CrawlerJob>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

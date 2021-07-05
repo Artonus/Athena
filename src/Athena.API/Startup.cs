@@ -1,3 +1,6 @@
+using System;
+using Athena.API.Jobs;
+using Athena.API.Services;
 using Athena.DataAccess;
 using Athena.DataAccess.Repository;
 using Athena.DataAccess.Repository.Base;
@@ -9,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Quartz;
 using StackExchange.Redis;
 
 namespace Athena.API
@@ -37,9 +41,29 @@ namespace Athena.API
             services.AddTransient(typeof(IRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IRetailerRepository, RetailerRepository>();
+            services.AddTransient<ICrawler, Crawler>();
+            services.AddTransient<IStockService, StockService>();
+            
 
-            //Redis
+            // Redis
             services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration.GetConnectionString("Redis")));
+
+            // Quartz scheduler
+            services.AddQuartz(q =>
+            {
+                q.SchedulerId = "AthenaScheduler";
+                q.SchedulerName = "Athena Quartz Scheduler";
+
+                q.UseMicrosoftDependencyInjectionJobFactory();
+                
+                q.ScheduleJob<CrawlerJob>(trg=>
+                        trg.WithIdentity("Athena Crawler")
+                            .WithDescription("Athena crawler for checking product availability")
+                            .StartAt(DateBuilder.EvenMinuteDate(DateTimeOffset.UtcNow))
+                            .WithCronSchedule("0 0/5 * * * ?"));
+            });
+            services.AddTransient<CrawlerJob>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
